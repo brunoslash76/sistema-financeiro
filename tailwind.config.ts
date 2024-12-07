@@ -37,6 +37,12 @@ const config: Config = {
       fontFamily: {
         sans: ['Inter', 'sans-serif']
       },
+      fontSize: {
+        h1: ['1.5rem', '1.5rem'], // 24px com line-height de 24px
+        h2: ['1.25rem', '1.25rem'], // 20px com line-height de 20px
+        p: ['1rem', '1rem'], // 16px com line-height de 26px
+        small: ['0.75rem', '0.75rem'], // 12px com line-height de 12px
+      },
     },
   },
   plugins: [],
