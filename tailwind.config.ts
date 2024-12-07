@@ -20,11 +20,11 @@ const config: Config = {
         secondary: {
           200: "#E4EDE3",
           400: "#47A138",
-          600: "#FF5031"
+          600: "#39862C"
         },
         tertiary: {
           400: "#FF5031",
-          600: "#FF5031"
+          600: "#D92C0E"
         },
         gray: {
           200: "#F5F5F5",
