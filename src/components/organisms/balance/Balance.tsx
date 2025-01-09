@@ -1,6 +1,10 @@
 import { EyeIcon } from "@/components/icons/EyeIcon";
 
-export function Balance() {
+export type BalanceProps = {
+  username: string;
+}
+
+export function Balance({username} : BalanceProps) {
   return (
     <div
       id="balance"
@@ -11,10 +15,11 @@ export function Balance() {
                         py-6
                         px-6
                         h-[400px]
-                        w-[690PX]"
+                        w-[690PX]
+                        text-white"
     >
       <div className="w-1/2 h-full">
-        <h1 className="text-h1 font-bold mb-6">{"Olá, Joana! :)"}</h1>
+        <h1 className="text-h1 font-bold mb-6">{`Olá, ${username} :)`}</h1>
         Quinta feira, 09/09/2024
       </div>
       <div className="w-1/2 py-8 px-8 h-full flex-col flex items-center justify-center">
