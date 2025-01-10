@@ -16,7 +16,7 @@ export default function OtherServices() {
         <img src='/Pixels3.png' alt='' width={180} height={178} className="absolute bottom-0 left-0 -z-10"/>    
         <img src='/Pixels4.png' alt='' width={180} height={178} className="absolute top-0 right-0 -z-10"/>
         <h1 className='text-h1 font-bold mt-2 pl-3 pb-3'>Confira os serviços disponíveis</h1>
-        <div className='grid py-5 lg:grid-cols-3 place-items-center'>
+        <div className='grid py-5 lg:grid-cols-3 place-items-center gap-6 lg:gap-0'>
             <div className='grid gap-6'>
               <ServiceButton link='/dashboard/other-services/loans' text="Empréstimo" imageLink="/IconLoan.png"/>
               <ServiceButton link='/dashboard/other-services/pix' text="Pix" imageLink="/IconPix.png"/>
