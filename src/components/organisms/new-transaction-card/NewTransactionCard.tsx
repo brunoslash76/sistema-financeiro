@@ -10,7 +10,8 @@ export function NewTransactionCard() {
                         lg:w-[690px]
                         lg:h-[351px]
                         text-primary-400
-                        relative">
+                        relative
+                        z-0">
             <img src='/Pixels3.png' alt='' width={180} height={178} className="absolute bottom-0 left-0 -z-10"/>    
             <img src='/Pixels4.png' alt='' width={180} height={178} className="absolute top-0 right-0 -z-10"/>
               
