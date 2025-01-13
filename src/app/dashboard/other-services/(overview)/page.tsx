@@ -4,15 +4,7 @@ export default function OtherServices() {
   return (
     <div 
     id='new-transaction'
-    className="bg-gray-400 
-                    rounded-lg
-                    py-6
-                    px-6
-                    lg:w-[690px]
-                    lg:h-[478px]
-                    text-black
-                    relative
-                    z-0">
+    className="bg-gray-400 rounded-lg py-6 px-6 lg:w-[690px] lg:h-[478px] text-black relative z-0">
         <img src='/Pixels3.png' alt='' width={180} height={178} className="absolute bottom-0 left-0 -z-10"/>    
         <img src='/Pixels4.png' alt='' width={180} height={178} className="absolute top-0 right-0 -z-10"/>
         <h1 className='text-h1 font-bold mt-2 pl-3 pb-3'>Confira os serviços disponíveis</h1>

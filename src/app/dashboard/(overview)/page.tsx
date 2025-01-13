@@ -3,8 +3,6 @@ import { NewTransactionCard } from "@/components/organisms/new-transaction-card/
 
 export default function Home() {
   return (
-        <>
-          <NewTransactionCard />
-        </>
+    <NewTransactionCard />
   );
 }
