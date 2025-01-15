@@ -1,3 +1,3 @@
 export default function Donations() {
-    return <p>Donations Page</p>;
-  }
+  return <p>Donations Page</p>;
+}

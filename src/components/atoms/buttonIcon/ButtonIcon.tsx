@@ -13,7 +13,7 @@ export function ButtonIcon({icon: Icon}) {
       hover:bg-primary-600
     `}
     >
-     <Icon />
+      <Icon />
     </button>
   );
 }

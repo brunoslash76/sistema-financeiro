@@ -1,22 +1,18 @@
-import { variantMap } from './Button.constants';
+import { buttonTypeMap, variantMap } from './Button.constants';
 import { ButtonProps } from "./button.types";
 
-export function Button({ label, variant, ...props }: ButtonProps) {
+export function Button({ children, variant, buttonType, ...props }: ButtonProps) {
   return (
     <button className={`
-      px-[32px]
-      py-[12px]
-      text-[#fff] 
-      bg-primary-400
-      rounded-[8px] 
-      font-semibold 
-      leading-none
-      hover:bg-primary-600
+      rounded-lg
+      px-4
+      py-2
       ${variantMap[variant]}
+      ${buttonTypeMap[buttonType]}
     `}
     { ...props }
     >
-      { label }
+      { children }
     </button>
   );
 };

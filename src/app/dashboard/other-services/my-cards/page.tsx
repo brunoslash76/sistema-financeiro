@@ -1,3 +1,3 @@
 export default function MyCards() {
-    return <p>My Cards Page</p>;
-  }
+  return <p>My Cards Page</p>;
+}
