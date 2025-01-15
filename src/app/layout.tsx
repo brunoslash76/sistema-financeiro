@@ -1,10 +1,10 @@
+import { UnauthenticatedFooter } from "@/components/moleculas/unauthenticated-footer/UnauthenticatedFooter";
+import { UnauthenticatedHeader } from "@/components/moleculas/unauthenticated-header/UnauthenticatedHeader";
 import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
 import "./globals.css";
-import { Extract } from "@/components/organisms/extract/Extract";
-import { MainHeader } from "@/components/organisms/main-header/MainHeader";
-import { Nav } from "@/components/organisms/nav/Nav";
-import { Balance } from "@/components/organisms/balance/Balance";
+
+export const experimental_ppr = true;
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,21 +28,23 @@ export default function RootLayout({
         className={`
           ${inter.variable}
           antialiased
-          h-[100vh]
+          h-[100%]
           w-full
-          bg-secondary-200
+          bg-gradient-to-b
+          from-primary-400
+          from-5%
+          to-secondary-200
+          to-70%
+          bg-no-repeat
+          bg-cover
         `} 
       >
-        <main className="h-full">
-        <MainHeader />
-        <div className="px-6 py-8 lg:px-36 lg:py-8 md:px-14 md:py-8 grid grid-cols-1 lg:grid-cols-3  lg:grid-cols-[15%_64%_21%]  gap-6 lg:w-[1353px] place-self-center">
-          <Nav />
-          <div className="grid lg:h-[740px] lg:place-content-between gap-y-6">
-          <Balance username="Joana" />
+        <main className="h-full w-full flex flex-col">
+          <UnauthenticatedHeader />
+          <div className="w-full mx-auto mb-auto px-4">
             {children}
           </div>
-          <Extract />
-        </div>
+          <UnauthenticatedFooter />
         </main>
       </body>
     </html>
