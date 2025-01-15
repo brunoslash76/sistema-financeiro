@@ -8,7 +8,7 @@ export function MainHeader() {
         <div className="md:hidden"><HamburguerIcon/></div>
         <div className="md:ml-auto flex gap-8 ">
           <p className="hidden text-white md:block">Joana da Silva Oliveira</p>
-          <UserIcon />
+          <UserIcon  size={40} />
         </div>
       </nav>
     </header>
