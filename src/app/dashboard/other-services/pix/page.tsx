@@ -1,3 +1,3 @@
 export default function Pix() {
-    return <p>Pix Page</p>;
-  }
+  return <p>Pix Page</p>;
+}

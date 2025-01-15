@@ -1,3 +1,3 @@
 export default function Loans() {
-    return <p>loans Page</p>;
-  }
+  return <p>loans Page</p>;
+}
