@@ -1,3 +1,3 @@
 export default function Investments() {
-    return <p>Investments Page</p>;
-  }
+  return <p>Investments Page</p>;
+}

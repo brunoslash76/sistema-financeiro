@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 
 export function Nav() {
   const pathname = usePathname();
-  //   const isActive = (path: string) => pathname.startsWith(path);
 
   const navItems = [
     { href: "/dashboard", label: "Início" },
