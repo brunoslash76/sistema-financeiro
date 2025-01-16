@@ -1,8 +1,9 @@
+"use client";
+
 import { MainHeader } from "@/components/moleculas/main-header/MainHeader";
 import { Balance } from "@/components/organisms/balance/Balance";
-import { Extract } from "@/components/organisms/extract/Extract";
+import { Invoice } from "@/components/organisms/invoice/Invoice";
 import { Nav } from "@/components/organisms/nav/Nav";
-
 export default function Layout({
   children,
 }: Readonly<{
@@ -17,7 +18,7 @@ export default function Layout({
           <Balance username="Joana" />
           {children}
         </div>
-        <Extract />
+        <Invoice />
       </div>
     </main>
   );

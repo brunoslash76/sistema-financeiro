@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { InvoiceProvider } from "@/lib/invoices-context";
 
 export const experimental_ppr = true;
 
@@ -20,18 +21,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body
-        className={`
+      <InvoiceProvider>
+        <body
+          className={`
           ${inter.variable}
           antialiased
           h-[100vh]
           w-full
         `}
-      >
-        {children}
-      </body>
+        >
+          {children}
+        </body>
+      </InvoiceProvider>
     </html>
   );
 }

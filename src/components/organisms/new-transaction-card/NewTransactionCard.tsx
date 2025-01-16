@@ -3,14 +3,42 @@
 import DropdownMenu from "@/components/moleculas/dropdown-menu/DropdownMenu";
 import Image from "next/image";
 import { useState } from "react";
+import { updatePage } from "@/lib/actions";
+import { useInvoiceProvider } from "@/lib/invoices-context";
+import { v4 as uuidv4 } from "uuid";
 
 export function NewTransactionCard() {
+  const { usePostInvoice } = useInvoiceProvider();
+  
   const [selected, setSelected] = useState("");
 
+  const [newInvoice, setNewInvoice] = useState({
+    id: uuidv4(),
+    type: "Deposito",
+    value: 0,
+    date: new Date(),
+  });
+
+  const onChangeType = (event) => {
+    const value = event.target.value;
+    setNewInvoice({ ...newInvoice, type: value });
+  };
+
+  const onChangeValue = (event) => {
+    const value = event.target.value;
+    setNewInvoice({ ...newInvoice, value: value });
+  };
+
+  const createInvoice = (event) => {
+    event.preventDefault();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    usePostInvoice(newInvoice);
+    updatePage();
+  };
   return (
     <div
       id="new-transaction"
-      className="bg-gray-400 rounded-lg py-6 px-6 w-full lg:h-[351px] text-primary-400 relative z-0"
+      className="bg-gray-400 rounded-lg py-6 px-6 lg:h-[351px] text-primary-400 relative z-0"
     >
       <Image
         src="/Pixels3.png"
@@ -29,8 +57,8 @@ export function NewTransactionCard() {
 
       <div className="grid align-left py-4 lg:grid-cols-2">
         <div className="grid gap-6">
-          <h1 className="text-h1 font-bold">Nova Transação</h1>
-          <form className="grid gap-6">
+          <h1 className="text-h1 font-bold ">Nova Transação</h1>
+          <form className="grid gap-6" onSubmit={createInvoice}>
             <DropdownMenu
               selected={selected}
               setSelected={setSelected}
@@ -46,10 +74,14 @@ export function NewTransactionCard() {
               <input
                 id="transaction-value"
                 className="peer block w-[184px] h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-primary-400"
-                placeholder="0,00"
+                placeholder="0"
+                onChange={onChangeValue}
               />
             </div>
-            <button className="peer block w-[184px] h-[43px] cursor-pointer rounded-md border border-primary-400 bg-primary-400 py-2 pl-2 text-p outline-2 font-bold text-white">
+            <button
+              type="submit"
+              className="peer block w-[184px] h-[43px] cursor-pointer rounded-md border border-primary-400 bg-primary-400 py-2 pl-2 text-p outline-2 font-bold text-white"
+            >
               Concluir Transação
             </button>
           </form>
