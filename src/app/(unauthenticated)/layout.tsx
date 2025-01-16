@@ -1,15 +1,7 @@
 import { UnauthenticatedFooter } from "@/components/moleculas/unauthenticated-footer/UnauthenticatedFooter";
 import { UnauthenticatedHeader } from "@/components/moleculas/unauthenticated-header/UnauthenticatedHeader";
-import type { Metadata } from "next";
 
-export const experimental_ppr = true;
-
-export const metadata: Metadata = {
-  title: "Sistema Financeiro - ABPW",
-  description: "Grupo de Pós da FIAP",
-};
-
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -32,9 +24,7 @@ export default function RootLayout({
           "
     >
       <UnauthenticatedHeader />
-      <div className="w-full mx-auto mb-auto px-4">
-        {children}
-      </div>
+      <div className="w-full mx-auto mb-auto px-4">{children}</div>
       <UnauthenticatedFooter />
     </main>
   );

@@ -28,10 +28,10 @@ export function NewTransactionCard() {
             <select
               id="transaction-type"
               name="transactionId"
-              className="peer block w-full h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-center"
               defaultValue=""
+              className="peer block w-full h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-center"
             >
-              <option value="" className="text-p" disabled selected>
+              <option value="" className="text-p" disabled hidden>
                 Selecione o tipo de transação
               </option>
               <option value="Câmbio de Moeda" className="text-p">

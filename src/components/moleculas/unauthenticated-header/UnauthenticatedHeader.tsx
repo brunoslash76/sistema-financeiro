@@ -1,15 +1,18 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/atoms/button/Button";
 import { HamburgerMenuIcon } from "@/components/icons/HamburgerMenuIcon";
 import { Logo } from "@/components/icons/Logo";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const experimental_ppr = true;
 
 export function UnauthenticatedHeader() {
+  const router = useRouter();
+
   function handleMenuClick() {
-    console.log('click')
+    console.log("click");
   }
 
   return (
@@ -20,27 +23,31 @@ export function UnauthenticatedHeader() {
         <nav className="w-full max-w-[1200px] mx-auto flex justify-between items-center py-8">
           <ul className="flex items-end gap-8">
             <li>
-              <Link href={'/'}>
+              <Link href={"/"}>
                 <Logo />
               </Link>
             </li>
             <li className="ml-8">
-              <Link className="text-secondary-600" href='/sobre'>
+              <Link className="text-secondary-600" href="/sobre">
                 Sobre
               </Link>
             </li>
             <li>
-              <Link className="text-secondary-600" href='/servicos'>
+              <Link className="text-secondary-600" href="/servicos">
                 Serviços
               </Link>
             </li>
           </ul>
           <div className="flex gap-8">
-            <Button buttonType="regular" variant="secondary" >
+            <Button buttonType="regular" variant="secondary">
               Abrir minha conta
             </Button>
-            <Button buttonType="outlined" variant="secondary" >
-              Abrir minha conta
+            <Button
+              buttonType="outlined"
+              variant="secondary"
+              onClick={() => router.push("/dashboard")}
+            >
+              Já tenho conta
             </Button>
           </div>
         </nav>
@@ -59,5 +66,5 @@ export function UnauthenticatedHeader() {
         <Logo />
       </section>
     </>
-  )
+  );
 }

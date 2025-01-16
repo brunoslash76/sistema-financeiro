@@ -26,7 +26,7 @@ export default function RootLayout({
         className={`
           ${inter.variable}
           antialiased
-          h-[100%]
+          h-[100vh]
           w-full
         `}
       >
