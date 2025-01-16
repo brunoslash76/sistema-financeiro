@@ -1,6 +1,8 @@
 "use client";
 
 import { EyeIcon } from "@/components/icons/EyeIcon";
+import { daysOfTheWeek } from "@/lib/consts";
+import { formatDate } from "@/lib/shared-functions";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -10,6 +12,8 @@ export type BalanceProps = {
 
 export function Balance({ username }: BalanceProps) {
   const [isVisible, setIsVisible] = useState(true);
+  const dayWeek = daysOfTheWeek[(new Date().getDay()) - 1]
+  const todaysDate = formatDate(new Date())
 
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
@@ -52,7 +56,7 @@ export function Balance({ username }: BalanceProps) {
       />
       <div className="w-1/2 h-full z-10">
         <h1 className="text-h1 font-bold mb-6">{`Olá, ${username} :)`}</h1>
-        Quinta feira, 09/09/2024
+        {`${dayWeek}, ${todaysDate}`}
       </div>
       <div className="w-1/2 py-8 px-8 h-full flex-col flex items-center justify-center z-10">
         <div
