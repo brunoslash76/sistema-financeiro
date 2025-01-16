@@ -1,5 +1,9 @@
+type ButtonIconProps = {
+  Icon: Icon;
+  onClickIcon?: () => void;
+}
 
-export function ButtonIcon({icon: Icon}) {
+export function ButtonIcon({Icon, onClickIcon}: ButtonIconProps) {
   return (
     <button className={`
       w-[30px]
@@ -12,6 +16,8 @@ export function ButtonIcon({icon: Icon}) {
       rounded-full 
       hover:bg-primary-600
     `}
+
+    onClick={onClickIcon}
     >
       <Icon />
     </button>
