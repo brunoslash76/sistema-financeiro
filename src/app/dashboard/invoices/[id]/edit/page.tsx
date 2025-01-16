@@ -1,36 +1,39 @@
 'use client'
 
-import { updatePage } from "@/lib/actions"
-import { useInvoiceProvider } from "@/lib/invoices-context"
-import {v4 as uuidv4} from 'uuid';
-import { useState } from "react"
+import { updatePage } from "@/lib/actions";
+import { useInvoiceProvider } from "@/lib/invoices-context";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
-export function NewTransactionCard() {
-  const {usePostInvoice} = useInvoiceProvider()
-  const [newInvoice, setNewInvoice] = useState({
-    id: uuidv4(),
-    type: 'Deposito',
-    value: 0,
-    date: new Date()
-  })
-  
+
+
+export default function EditInvoice() {
+  const idParam = useSearchParams()
+  const id = idParam.get('id') || ''
+  const {useGetInvoice, usePatchInvoice} = useInvoiceProvider()
+  const invoice = useGetInvoice(id)
+
+  if(!invoice) throw new Error("n tem invoice")
+  const [editInvoice, setEditInvoice] = useState(invoice)
+
   const onChangeType = (event) => {
     const value = event.target.value
-    setNewInvoice({...newInvoice, type: value})
+    setEditInvoice({...editInvoice, type: value})
   }
-  
+
   const onChangeValue = (event) => {
     const value = event.target.value
-    setNewInvoice({...newInvoice, value: value})
+    setEditInvoice({...editInvoice, value: value})
   }
-  
-  
-  const createInvoice = (event) => {
+
+
+  const updateInvoice = (event) => {
     event.preventDefault()
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    usePostInvoice(newInvoice)
+    usePatchInvoice(editInvoice)
     updatePage()
   }
+
   return (
     <div 
       id='new-transaction'
@@ -40,26 +43,24 @@ export function NewTransactionCard() {
               
       <div className='grid align-left py-4 lg:grid-cols-2'>
         <div className='grid gap-6'>
-          <h1 className='text-h1 font-bold '>Nova Transação</h1>
-          <form className='grid gap-6' onSubmit={createInvoice}>
+          <h1 className='text-h1 font-bold '>Editar Transação</h1>
+          <form className='grid gap-6' onSubmit={updateInvoice}>
             <select
               id='transaction-type'
-              name="transactionId"
-              required
+              name="type"
               className="peer block w-full h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-center"
-              defaultValue=''
-              onChange={onChangeType}
+              defaultValue={editInvoice.type}
+              onClick={onChangeType}
             >
-              <option value="" className="text-p" disabled selected>Selecione o tipo de transação</option>
               <option value="Depósito" className="text-p">Depósito</option>
               <option value="Saque" className="text-p">Saque</option>
               <option value="Transferência" className="text-p">Transferência</option>
             </select>
             <div className='grid gap-2'>
               <label className='font-bold'>Valor</label>
-              <input id='transaction-value' className="peer block w-[184px] h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-primary-400" placeholder='0' onChange={onChangeValue}/>
+              <input id='transaction-value' name="value" type="number" step="0.01" className="peer block w-[184px] h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-primary-400" defaultValue={editInvoice.value} onChange={onChangeValue}/>
             </div>
-            <button type='submit' className="peer block w-[184px] h-[43px] cursor-pointer rounded-md border border-primary-400 bg-primary-400 py-2 pl-2 text-p outline-2 font-bold text-white">Concluir Transação</button>                      
+            <button type="submit" className="peer block w-[184px] h-[43px] cursor-pointer rounded-md border border-primary-400 bg-primary-400 py-2 pl-2 text-p outline-2 font-bold text-white">Concluir Edição</button>                      
           </form>
         </div>
         <div className='lg:col-start-2'>
@@ -69,4 +70,3 @@ export function NewTransactionCard() {
     </div>
   )
 }
-

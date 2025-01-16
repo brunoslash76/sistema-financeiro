@@ -1,10 +1,11 @@
+'use client'
+
 import { MainHeader } from "@/components/moleculas/main-header/MainHeader";
 import { Balance } from "@/components/organisms/balance/Balance";
-import { Extract } from "@/components/organisms/extract/Extract";
 import { Nav } from "@/components/organisms/nav/Nav";
-import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
 import "../globals.css";
+import { Invoice } from "@/components/organisms/invoice/Invoice";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -12,19 +13,14 @@ const inter = Inter({
   display: 'swap',
 })
 
-export const metadata: Metadata = {
-  title: "Sistema Financeiro - ABPW",
-  description: "Grupo de Pós da FIAP",
-};
-
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
+    <>
+      <div
         className={`
           ${inter.variable}
           antialiased
@@ -41,10 +37,10 @@ export default function RootLayout({
               <Balance username="Joana" />
               {children}
             </div>
-            <Extract />
+            <Invoice/>
           </div>
         </main>
-      </body>
-    </html>
+      </div>
+    </>
   );
 }
