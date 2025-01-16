@@ -1,6 +1,12 @@
+"use client";
+
+import DropdownMenu from "@/components/moleculas/dropdown-menu/DropdownMenu";
 import Image from "next/image";
+import { useState } from "react";
 
 export function NewTransactionCard() {
+  const [selected, setSelected] = useState("");
+
   return (
     <div
       id="new-transaction"
@@ -25,25 +31,16 @@ export function NewTransactionCard() {
         <div className="grid gap-6">
           <h1 className="text-h1 font-bold">Nova Transação</h1>
           <form className="grid gap-6">
-            <select
-              id="transaction-type"
-              name="transactionId"
-              defaultValue=""
-              className="peer block w-full h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-center"
-            >
-              <option value="" className="text-p" disabled hidden>
-                Selecione o tipo de transação
-              </option>
-              <option value="Câmbio de Moeda" className="text-p">
-                Câmbio de Moeda
-              </option>
-              <option value="DOC/TED" className="text-p">
-                DOC/TED
-              </option>
-              <option value="Empréstimo e Financiamento" className="text-p">
-                Empréstimo e Financiamento
-              </option>
-            </select>
+            <DropdownMenu
+              selected={selected}
+              setSelected={setSelected}
+              options={[
+                "Câmbio de Moeda",
+                "DOC/TED",
+                "Empréstimo e Financiamento",
+              ]}
+              placeholder="Selecione o tipo de transação"
+            ></DropdownMenu>
             <div className="grid gap-2">
               <label className="font-bold">Valor</label>
               <input
