@@ -24,13 +24,14 @@ export function Balance({ username }: BalanceProps) {
       id="balance"
       className="bg-primary-400
                         flex 
+                        relative
                         rounded-lg
                         py-6
                         px-6
                         w-full
                         h-[400px]
                         text-white
-                        relative"
+                        "
     >
       <Image
         src="/Pixels1.png"
@@ -53,11 +54,11 @@ export function Balance({ username }: BalanceProps) {
         height={178}
         className="absolute top-0 right-0"
       />
-      <div className="w-1/2 h-full">
+      <div className="w-1/2 h-full z-10">
         <h1 className="text-h1 font-bold mb-6">{`Olá, ${username} :)`}</h1>
         {`${dayWeek}, ${todaysDate}`}
       </div>
-      <div className="w-1/2 py-8 px-8 h-full flex-col flex items-center justify-center">
+      <div className="w-1/2 py-8 px-8 h-full flex-col flex items-center justify-center z-10">
         <div
           id="eye"
           className={`w-full flex items-center border-b-2 pb-[16px] ${
@@ -78,7 +79,7 @@ export function Balance({ username }: BalanceProps) {
         <div id="conta" className="pt-[16px] self-start">
           Conta corrente
         </div>
-        <div id="valor" className="pt-[8px] text-[31px] self-start">
+        <div id="valor" className="pt-[8px] text-[31px] self-start whitespace-nowrap">
           R$ {isVisible ? "2.500,00" : "***"}
         </div>
       </div>

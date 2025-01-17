@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from 'next/font/google';
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { InvoiceProvider } from "@/lib/invoices-context";
 
 export const experimental_ppr = true;
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--inter-font-sans',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  variable: "--inter-font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Sistema Financeiro - ABPW",
@@ -29,7 +29,7 @@ export default function RootLayout({
           className={`
           ${inter.variable}
           antialiased
-          h-[100%]
+          h-[100vh]
           w-full
         `}
         >
