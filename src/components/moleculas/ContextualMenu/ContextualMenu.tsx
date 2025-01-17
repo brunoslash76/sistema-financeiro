@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 
 export type ContextualMenuProps = {
   isMenuOpen: boolean;
+  onClose: () => void;
 };
 
-export function ContextualMenu({ isMenuOpen }: ContextualMenuProps) {
+export function ContextualMenu({ isMenuOpen, onClose }: ContextualMenuProps) {
   const pathname = usePathname();
 
   const navItems = [
@@ -42,7 +43,11 @@ export function ContextualMenu({ isMenuOpen }: ContextualMenuProps) {
                     : ""
                 } hover:text-tertiary-400 hover:font-bold`}
               >
-                <Link href={item.href} className="py-4 w-full">
+                <Link
+                  href={item.href}
+                  className="py-4 w-full"
+                  onClick={onClose}
+                >
                   {item.label}
                 </Link>
               </li>
