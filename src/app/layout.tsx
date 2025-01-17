@@ -31,6 +31,7 @@ export default function RootLayout({
           antialiased
           h-[100vh]
           w-full
+          bg-secondary-200
         `}
         >
           {children}
