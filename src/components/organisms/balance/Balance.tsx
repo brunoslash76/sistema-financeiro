@@ -12,8 +12,8 @@ export type BalanceProps = {
 
 export function Balance({ username }: BalanceProps) {
   const [isVisible, setIsVisible] = useState(true);
-  const dayWeek = daysOfTheWeek[(new Date().getDay()) - 1]
-  const todaysDate = formatDate(new Date())
+  const dayWeek = daysOfTheWeek[new Date().getDay() - 1];
+  const todaysDate = formatDate(new Date());
 
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
@@ -23,13 +23,15 @@ export function Balance({ username }: BalanceProps) {
     <div
       id="balance"
       className="bg-primary-400
-                        flex 
+                        flex
                         relative
                         rounded-lg
-                        py-6
-                        px-6
+                        lg:py-6 md:py-6 py-[60px]
+                        lg:px-6 md:px-6 px-[60px]
                         w-full
-                        h-[400px]
+                        h-auto
+                        lg:min-h-[400px] md:min-h-[400px]
+                        flex-col lg:flex-row md:flex-row
                         text-white
                         "
     >
@@ -41,24 +43,17 @@ export function Balance({ username }: BalanceProps) {
         className="absolute bottom-0 left-0"
       />
       <Image
-        src="/Porquinho.png"
-        alt=""
-        width={250}
-        height={250}
-        className="absolute bottom-[30px] left-[60px]"
-      />
-      <Image
         src="/Pixels2.png"
         alt=""
         width={180}
         height={178}
         className="absolute top-0 right-0"
       />
-      <div className="w-1/2 h-full z-10">
+      <div className="lg:w-1/2 md:w-1/2 w-full h-full z-10 flex flex-col lg:items-start md:items-start items-center">
         <h1 className="text-h1 font-bold mb-6">{`Olá, ${username} :)`}</h1>
         {`${dayWeek}, ${todaysDate}`}
       </div>
-      <div className="w-1/2 py-8 px-8 h-full flex-col flex items-center justify-center z-10">
+      <div className="lg:w-1/2 md:w-1/2 w-full py-8 px-8 h-full flex-col flex items-center justify-center z-10">
         <div
           id="eye"
           className={`w-full flex items-center border-b-2 pb-[16px] ${
@@ -79,10 +74,20 @@ export function Balance({ username }: BalanceProps) {
         <div id="conta" className="pt-[16px] self-start">
           Conta corrente
         </div>
-        <div id="valor" className="pt-[8px] text-[31px] self-start whitespace-nowrap">
+        <div
+          id="valor"
+          className="pt-[8px] text-[31px] self-start whitespace-nowrap"
+        >
           R$ {isVisible ? "2.500,00" : "***"}
         </div>
       </div>
+      <Image
+        src="/Porquinho.png"
+        alt=""
+        width={250}
+        height={250}
+        className="lg:absolute md:absolute lg:bottom-[30px] md:bottom-[30px] lg:left-[60px] md:left-[60px] lg:mx-0 md:mx-0 mx-auto lg:mt-0 md:mt-0 mt-4"
+      />
     </div>
   );
 }

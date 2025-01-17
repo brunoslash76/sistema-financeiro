@@ -1,11 +1,12 @@
 "use client";
 
 import DropdownMenu from "@/components/moleculas/dropdown-menu/DropdownMenu";
-import Image from "next/image";
-import { useState } from "react";
 import { updatePage } from "@/lib/actions";
 import { useInvoiceProvider } from "@/lib/invoices-context";
+import Image from "next/image";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import "./NewTransactionCard.styles.css";
 
 export function NewTransactionCard() {
   const { usePostInvoice } = useInvoiceProvider();
@@ -31,7 +32,7 @@ export function NewTransactionCard() {
 
   const createInvoice = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!newInvoice.type || newInvoice.value <= 0) {
+    if (!newInvoice.type || newInvoice.value === 0) {
       alert("Por favor, preencha todos os campos corretamente.");
       return;
     }
@@ -85,7 +86,8 @@ export function NewTransactionCard() {
                 id="transaction-value"
                 name="transaction-value"
                 type="numeric"
-                className="peer block w-[184px] h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-primary-400"
+                step="0.01"
+                className="peer block w-[184px] h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p text-center outline-2 text-primary-400"
                 placeholder="0"
                 value={newInvoice.value}
                 onChange={onChangeValue}
