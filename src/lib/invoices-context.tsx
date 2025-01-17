@@ -10,27 +10,27 @@ export interface Invoice {
 
 const invoicesMock: Invoice[] = [    
   {
-    id: '1111',
+    id: '1',
     type: 'Depósito',
     value: 300.00,
     date: new Date('Mon Apr 01 2024 16:24:42 GMT-0300 (Hora padrão de Brasília)')    
   },
 
   {
-    id: '1211',
+    id: '2',
     type: 'Saque',
     value: 300.00,
     date: new Date('Mon Apr 08 2024 16:24:42 GMT-0300 (Hora padrão de Brasília)')   
   },
   {
-    id: '1221',
+    id: '3',
     type: 'Depósito',
     value: 250.00,
     date: new Date('Sat Jun 01 2024 16:24:42 GMT-0300 (Hora padrão de Brasília)')   
   },
 
   {
-    id: '1222',
+    id: '4',
     type: 'Saque',
     value: 600.00,
     date: new Date('Sat Oct 19 2024 16:24:42 GMT-0300 (Hora padrão de Brasília)')    

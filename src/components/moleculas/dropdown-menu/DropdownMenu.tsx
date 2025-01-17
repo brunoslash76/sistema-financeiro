@@ -1,12 +1,12 @@
 "use client";
 
 import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./DropdownMenu.styles.css";
 
 export type DropdownMenuProps = {
   selected: string;
-  setSelected: Dispatch<SetStateAction<string>>;
+  setSelected: (option: string) => void;
   options: string[];
   placeholder: string;
 };

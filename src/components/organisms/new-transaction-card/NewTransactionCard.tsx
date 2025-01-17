@@ -9,36 +9,50 @@ import { v4 as uuidv4 } from "uuid";
 
 export function NewTransactionCard() {
   const { usePostInvoice } = useInvoiceProvider();
-  
-  const [selected, setSelected] = useState("");
+  const postInvoice = usePostInvoice;
 
   const [newInvoice, setNewInvoice] = useState({
     id: uuidv4(),
-    type: "Deposito",
+    type: "",
     value: 0,
     date: new Date(),
   });
 
-  const onChangeType = (event) => {
-    const value = event.target.value;
-    setNewInvoice({ ...newInvoice, type: value });
+  const onChangeType = (value: string) => {
+    setNewInvoice((prev) => ({ ...prev, type: value }));
   };
 
-  const onChangeValue = (event) => {
+  const onChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setNewInvoice({ ...newInvoice, value: value });
+    if (!isNaN(Number(value))) {
+      setNewInvoice((prev) => ({ ...prev, value: Number(value) }));
+    }
   };
 
-  const createInvoice = (event) => {
+  const createInvoice = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    usePostInvoice(newInvoice);
+    if (!newInvoice.type || newInvoice.value <= 0) {
+      alert("Por favor, preencha todos os campos corretamente.");
+      return;
+    }
+    postInvoice(newInvoice);
     updatePage();
+    resetForm();
   };
+
+  const resetForm = () => {
+    setNewInvoice({
+      id: uuidv4(),
+      type: "",
+      value: 0,
+      date: new Date(),
+    });
+  };
+
   return (
     <div
       id="new-transaction"
-      className="bg-gray-400 rounded-lg py-6 px-6 lg:h-[351px] text-primary-400 relative z-0"
+      className="bg-gray-400 rounded-lg py-6 px-6 lg:h-[350px] text-primary-400 relative z-0"
     >
       <Image
         src="/Pixels3.png"
@@ -60,21 +74,20 @@ export function NewTransactionCard() {
           <h1 className="text-h1 font-bold ">Nova Transação</h1>
           <form className="grid gap-6" onSubmit={createInvoice}>
             <DropdownMenu
-              selected={selected}
-              setSelected={setSelected}
-              options={[
-                "Câmbio de Moeda",
-                "DOC/TED",
-                "Empréstimo e Financiamento",
-              ]}
+              selected={newInvoice.type}
+              setSelected={onChangeType}
+              options={["Depósito", "Saque", "Transferência"]}
               placeholder="Selecione o tipo de transação"
             ></DropdownMenu>
             <div className="grid gap-2">
               <label className="font-bold">Valor</label>
               <input
                 id="transaction-value"
+                name="transaction-value"
+                type="numeric"
                 className="peer block w-[184px] h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p outline-2 text-primary-400"
                 placeholder="0"
+                value={newInvoice.value}
                 onChange={onChangeValue}
               />
             </div>
