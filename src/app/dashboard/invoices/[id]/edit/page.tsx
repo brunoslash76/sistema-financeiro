@@ -2,7 +2,7 @@
 
 import { updatePage } from "@/lib/actions";
 import { useInvoiceProvider } from "@/lib/invoices-context";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 
@@ -13,7 +13,7 @@ export default function EditInvoice() {
   const {useGetInvoice, usePatchInvoice} = useInvoiceProvider()
   const invoice = useGetInvoice(id)
 
-  if(!invoice) throw new Error("n tem invoice")
+  if(!invoice) redirect('/not-found')
   const [editInvoice, setEditInvoice] = useState(invoice)
 
   const onChangeType = (event) => {
