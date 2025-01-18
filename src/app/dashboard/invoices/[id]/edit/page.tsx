@@ -4,7 +4,7 @@ import DropdownMenu from "@/components/moleculas/dropdown-menu/DropdownMenu";
 import { updatePage } from "@/lib/actions";
 import { useInvoiceProvider } from "@/lib/invoices-context";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function EditInvoice() {
@@ -14,8 +14,8 @@ export default function EditInvoice() {
   const patchInvoice = usePatchInvoice;
   const invoice = useGetInvoice(id);
 
-  if (!invoice) throw new Error("Essa transação não foi encontrada");
-  const [editInvoice, setEditInvoice] = useState(invoice);
+  if(!invoice) redirect('/not-found')
+  const [editInvoice, setEditInvoice] = useState(invoice)
 
   const onChangeType = (value: string) => {
     setEditInvoice((prev) => ({ ...prev, type: value }));
