@@ -2,6 +2,7 @@
 
 import { EyeIcon } from "@/components/icons/EyeIcon";
 import { daysOfTheWeek } from "@/lib/consts";
+import { useInvoiceProvider } from "@/lib/invoices-context";
 import { formatDate } from "@/lib/shared-functions";
 import Image from "next/image";
 import { useState } from "react";
@@ -17,6 +18,25 @@ export function Balance({ username }: BalanceProps) {
 
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
+  };
+
+  const invoiceContext = useInvoiceProvider();
+  const invoices = invoiceContext?.invoices;
+
+  const getTotalInvoices = () => {
+    const total = invoices.reduce((acc, invoice) => {
+      if (invoice.type === "Depósito") {
+        return acc + invoice.value;
+      } else if (invoice.type === "Saque" || invoice.type === "Transferência") {
+        return acc - invoice.value;
+      }
+      return acc;
+    }, 0);
+    const formattedTotal = `${total
+      .toFixed(2)
+      .replace(".", ",")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+    return formattedTotal;
   };
 
   return (
@@ -78,7 +98,7 @@ export function Balance({ username }: BalanceProps) {
           id="valor"
           className="pt-[8px] text-[31px] self-start whitespace-nowrap"
         >
-          R$ {isVisible ? "2.500,00" : "***"}
+          R$ {isVisible ? getTotalInvoices() : "***"}
         </div>
       </div>
       <Image
