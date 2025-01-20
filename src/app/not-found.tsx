@@ -19,6 +19,8 @@ export default function NotFound() {
         <p className="text-center">Que tal voltar e tentar novamente?</p>
       </div>
       <button
+        type="button"
+        role="link"
         className="
           w-[144px]
           h-[48px]
