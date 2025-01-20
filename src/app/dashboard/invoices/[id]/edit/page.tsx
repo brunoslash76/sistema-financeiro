@@ -15,6 +15,7 @@ export default function EditInvoice() {
   const invoice = useGetInvoice(id);
 
   if(!invoice) redirect('/not-found')
+  
   const [editInvoice, setEditInvoice] = useState(invoice)
 
   const onChangeType = (value: string) => {
