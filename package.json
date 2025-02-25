@@ -9,7 +9,9 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.1",
     "@reduxjs/toolkit": "^2.3.0",
+    "graphql": "^16.10.0",
     "next": "^15.2.0-canary.11",
     "react": "^18",
     "react-dom": "^18",
