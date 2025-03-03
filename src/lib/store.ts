@@ -1,14 +1,33 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import { api } from './api'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+import { api } from './api';
+// reducers
+import authReducer from './features/authSlice';
+import modalReducer from './features/modalSlice';
+import userReducer from './features/userSlice';
+
+let storage;
+
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  storage = require('redux-persist/lib/storage').default
+} else {
+  storage = {
+    getItem: () => Promise.resolve(null),
+    setItem: () => Promise.resolve(),
+    removeItem: () => Promise.resolve(),
+  }
+}
 
 const persistConfig = {
   key: 'root',
-  storage: storage,
+  storage,
 }
 
 const rootReducer = combineReducers({
+  auth: authReducer,
+  modal: modalReducer,
+  user: userReducer,
   [api.reducerPath]: api.reducer
 })
 

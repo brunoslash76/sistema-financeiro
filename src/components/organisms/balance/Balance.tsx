@@ -1,59 +1,39 @@
 "use client";
 
 import { EyeIcon } from "@/components/icons/EyeIcon";
-import { daysOfTheWeek } from "@/lib/consts";
-import { useInvoiceProvider } from "@/lib/invoices-context";
-import { formatDate } from "@/lib/shared-functions";
+import { useAppSelector } from "@/lib/hooks";
 import Image from "next/image";
 import { useState } from "react";
 
-export type BalanceProps = {
-  username: string;
-};
+interface Props {
+  balance: number | null | undefined
+}
 
-export function Balance({ username }: BalanceProps) {
+export function Balance({ balance }: Props) {
   const [isVisible, setIsVisible] = useState(true);
-  const dayWeek = daysOfTheWeek[new Date().getDay() - 1];
-  const todaysDate = formatDate(new Date());
+  const { name } = useAppSelector(state => state.user)
 
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
   };
 
-  const invoiceContext = useInvoiceProvider();
-  const invoices = invoiceContext?.invoices;
-
-  const getTotalInvoices = () => {
-    const total = invoices.reduce((acc, invoice) => {
-      if (invoice.type === "Depósito") {
-        return acc + invoice.value;
-      } else if (invoice.type === "Saque" || invoice.type === "Transferência") {
-        return acc - invoice.value;
-      }
-      return acc;
-    }, 0);
-    const formattedTotal = `${total
-      .toFixed(2)
-      .replace(".", ",")
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-    return formattedTotal;
-  };
-
   return (
     <div
       id="balance"
-      className="bg-primary-400
-                        flex
-                        relative
-                        rounded-lg
-                        lg:py-6 md:py-6 py-[60px]
-                        lg:px-6 md:px-6 px-[60px]
-                        w-full
-                        h-auto
-                        lg:min-h-[400px] md:min-h-[400px]
-                        flex-col lg:flex-row md:flex-row
-                        text-white
-                        "
+      className="
+        bg-primary-400
+        flex
+        relative
+        rounded-lg
+        lg:py-6 md:py-6 py-[60px]
+        lg:px-6 md:px-6 px-[60px]
+        w-full
+        h-auto
+        lg:min-h-[400px] md:min-h-[400px]
+        flex-col lg:flex-row md:flex-row
+        text-white
+        max-h-[400px]
+      "
     >
       <Image
         src="/Pixels1.png"
@@ -70,8 +50,7 @@ export function Balance({ username }: BalanceProps) {
         className="absolute top-0 right-0"
       />
       <div className="lg:w-1/2 md:w-1/2 w-full h-full z-10 flex flex-col lg:items-start md:items-start items-center">
-        <h1 className="text-h1 font-bold mb-6">{`Olá, ${username} :)`}</h1>
-        {`${dayWeek}, ${todaysDate}`}
+        <h1 className="text-h1 font-bold mb-6">{`Olá, ${name} :)`}</h1>
       </div>
       <div className="lg:w-1/2 md:w-1/2 w-full py-8 px-8 h-full flex-col flex items-center justify-center z-10">
         <div
@@ -98,7 +77,12 @@ export function Balance({ username }: BalanceProps) {
           id="valor"
           className="pt-[8px] text-[31px] self-start whitespace-nowrap"
         >
-          R$ {isVisible ? getTotalInvoices() : "***"}
+          R${'  '} 
+          {
+            isVisible 
+              ? (balance?.toFixed(2).replace('.', ',') ?? '00,00') 
+              : '***,**'
+          }
         </div>
       </div>
       <Image

@@ -1,7 +1,13 @@
-import type { Metadata } from "next";
+'use client'
+
+import { client } from "@/graphql/config";
+import { ApolloProvider } from "@apollo/client";
 import { Inter } from "next/font/google";
+import { Provider } from "react-redux";
+import { makeStore } from '../lib/store';
 import "./globals.css";
-import { InvoiceProvider } from "@/lib/invoices-context";
+
+
 
 export const experimental_ppr = true;
 
@@ -11,11 +17,6 @@ const inter = Inter({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Sistema Financeiro - ABPW",
-  description: "Grupo de Pós da FIAP",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,19 +25,21 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <InvoiceProvider>
-        <body
-          className={`
-          ${inter.variable}
-          antialiased
-          h-[100vh]
-          w-full
-          bg-secondary-200
-        `}
-        >
-          {children}
-        </body>
-      </InvoiceProvider>
+      <body
+        className={`
+            ${inter.variable}
+            antialiased
+            h-[100vh]
+            w-full
+            bg-secondary-200
+          `}
+      >
+        <Provider store={makeStore()}>
+          <ApolloProvider client={client}>
+            {children}
+          </ApolloProvider>
+        </Provider>
+      </body>
     </html>
   );
 }
