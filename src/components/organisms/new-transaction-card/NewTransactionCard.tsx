@@ -1,54 +1,56 @@
 "use client";
 
-import DropdownMenu from "@/components/moleculas/dropdown-menu/DropdownMenu";
-import { updatePage } from "@/lib/actions";
-import { useInvoiceProvider } from "@/lib/invoices-context";
+import { ADD_TRANSACTION } from "@/graphql/mutations/addTransaction";
+import { GET_ACCOUNT } from "@/graphql/queries/getAccount";
+import { GET_TRANSACTION_TYPES } from "@/graphql/queries/getTransactionTypes";
+import { OperationType, TransactionTypes } from "@/types/transactionTypes";
+import { useMutation, useQuery } from "@apollo/client";
 import Image from "next/image";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import "./NewTransactionCard.styles.css";
+import { useForm } from "react-hook-form";
+
+
+interface FormData {
+  operationType: OperationType
+  value: string
+}
 
 export function NewTransactionCard() {
-  const { usePostInvoice } = useInvoiceProvider();
-  const postInvoice = usePostInvoice;
-
-  const [newInvoice, setNewInvoice] = useState({
-    id: uuidv4(),
-    type: "",
-    value: 0,
-    date: new Date(),
-  });
-
-  const onChangeType = (value: string) => {
-    setNewInvoice((prev) => ({ ...prev, type: value }));
-  };
-
-  const onChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (!isNaN(Number(value))) {
-      setNewInvoice((prev) => ({ ...prev, value: Number(value) }));
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: {
+      errors,
+    },
+  } = useForm<FormData>()
+  const { data } = useQuery<TransactionTypes>(GET_TRANSACTION_TYPES)
+  const [addTransaction] = useMutation(ADD_TRANSACTION, {
+    onCompleted: () => {
+      reset()
+    },
+    onError: (error) => {
+      alert(error)
+    },
+    refetchQueries: [
+      GET_ACCOUNT
+    ]
+  })
+  
+  function onSubmit(data: FormData) {
+    if (!data.operationType) {
+      return setError('operationType', { message: 'Selecione um tipo de transação'})
     }
-  };
-
-  const createInvoice = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!newInvoice.type || newInvoice.value === 0) {
-      alert("Por favor, preencha todos os campos corretamente.");
-      return;
-    }
-    postInvoice(newInvoice);
-    updatePage();
-    resetForm();
-  };
-
-  const resetForm = () => {
-    setNewInvoice({
-      id: uuidv4(),
-      type: "",
-      value: 0,
-      date: new Date(),
-    });
-  };
+    
+    addTransaction({
+      variables: {
+        transaction: {
+          value: Math.abs(parseFloat(data.value)),
+          type: data.operationType,
+        }
+      }
+    })
+  }
 
   return (
     <div
@@ -72,30 +74,71 @@ export function NewTransactionCard() {
 
       <div className="grid align-left py-4 lg:grid-cols-2">
         <div className="grid gap-6">
-          <h1 className="text-h1 font-bold ">Nova Transação</h1>
-          <form className="grid gap-6" onSubmit={createInvoice}>
-            <DropdownMenu
-              selected={newInvoice.type}
-              setSelected={onChangeType}
-              options={["Depósito", "Saque", "Transferência"]}
-              placeholder="Selecione o tipo de transação"
-            ></DropdownMenu>
+          <h1 className="text-h1 font-bold">Nova Transação</h1>
+          <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
+            <div className="relative">
+              <select
+                className="bg-white p-4 rounded-lg border border-primary-400"
+                { ...register('operationType', { required: 'Selecione uma transação válida'})}
+              >
+                <option hidden value=''>Selecione uma transação</option>
+                { data?.getTransactionTypes.map((transaction) => {
+                  return (
+                    <option key={transaction.display} value={transaction.value}>{transaction.display}</option>
+                  )
+                })}
+              </select>
+              {errors['operationType'] && <p className="text-red-600 absolute">{errors['operationType'].message}</p>}
+            </div>
             <div className="grid gap-2">
               <label className="font-bold">Valor</label>
-              <input
-                id="transaction-value"
-                name="transaction-value"
-                type="numeric"
-                step="0.01"
-                className="peer block w-[184px] h-[48px] cursor-pointer rounded-md border border-primary-400 py-2 pl-2 text-p text-center outline-2 text-primary-400"
-                placeholder="0"
-                value={newInvoice.value}
-                onChange={onChangeValue}
-              />
+              <div className="relative">
+                <input
+                  id="transaction-value"
+                  type="numeric"
+                  step="0.01"
+                  className="
+                    peer
+                    block
+                    w-[184px]
+                    h-[48px]
+                    cursor-pointer
+                    rounded-md
+                    border
+                    border-primary-400
+                    py-2
+                    pl-2
+                    text-p
+                    text-center
+                    outline-2
+                    text-primary-400
+                  "
+                  placeholder="0,00"
+                  {...register('value', { required: 'Adicione um valor válido' })}
+                />
+                <span className="absolute top-3 left-4 text-primary-400">R$ </span>
+                {errors['value'] && <p className="text-red-600 absolute">{errors['value'].message}</p>}
+              </div>
             </div>
             <button
               type="submit"
-              className="peer block w-[184px] h-[43px] cursor-pointer rounded-md border border-primary-400 bg-primary-400 py-2 pl-2 text-p outline-2 font-bold text-white"
+              className="
+                peer
+                block
+                w-[184px]
+                h-[43px]
+                cursor-pointer
+                rounded-md
+                border
+                border-primary-400
+                bg-primary-400
+                py-2
+                pl-2
+                text-p
+                outline-2
+                font-bold
+                text-white
+              "
             >
               Concluir Transação
             </button>
