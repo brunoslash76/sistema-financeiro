@@ -9,7 +9,7 @@ export function Card({ children }: Props) {
   return (
     <div
       id="new-transaction"
-      className="bg-gray-400 rounded-lg py-6 px-6 lg:h-[350px] text-primary-400 relative z-0"
+      className="bg-gray-400 rounded-lg py-6 px-6 text-primary-400 relative z-0"
     >
       <Image
         src="/Pixels3.png"
