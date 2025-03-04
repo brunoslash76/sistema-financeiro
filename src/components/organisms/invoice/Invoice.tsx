@@ -2,6 +2,7 @@
 
 import { Transaction } from "@/types/accountQueryResult"
 import { OperationType } from "@/types/transactionTypes"
+import { moneyMask } from "@/utils/number-formating"
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
@@ -26,13 +27,13 @@ export function Invoice({ transactions }: Props) {
           <div key={transaction._id} className="mb-8 border border-b-secondary-400 pb-2">
             <header>
               <p className="capitalize font-semibold text-secondary-400 text-sm">
-                {format(transaction.createdAt, 'MMMM', { locale: ptBR})}
+                {format(transaction.createdAt, 'MMMM', { locale: ptBR })}
               </p>
             </header>
             <section className="flex items-start justify-between">
               <div>
                 <p className="">{transactionTypeDictionary[transaction.type]}</p>
-                <p className="font-semibold">R$ {Math.abs(transaction.value).toFixed(2).replace('.', ',')}</p>
+                <p className="font-semibold">R$ {moneyMask(`${Math.abs(transaction.value)}`)}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-600">{format(transaction.createdAt, 'dd/MM/yyyy')}</p>
