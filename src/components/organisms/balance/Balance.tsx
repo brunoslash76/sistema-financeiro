@@ -80,7 +80,7 @@ export function Balance({ balance }: Props) {
           R${'  '} 
           {
             isVisible 
-              ? (balance?.toFixed(2).replace('.', ',') ?? '00,00') 
+              ? (balance?.toLocaleString('pt-BR') ?? '00,00') 
               : '***,**'
           }
         </div>
