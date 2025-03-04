@@ -1,13 +1,15 @@
 "use client";
 
+import { Card } from "@/components/moleculas/card/Card";
 import { ADD_TRANSACTION } from "@/graphql/mutations/addTransaction";
 import { GET_ACCOUNT } from "@/graphql/queries/getAccount";
 import { GET_TRANSACTION_TYPES } from "@/graphql/queries/getTransactionTypes";
 import { OperationType, TransactionTypes } from "@/types/transactionTypes";
+import { moneyMask } from "@/utils/number-formating";
 import { useMutation, useQuery } from "@apollo/client";
 import Image from "next/image";
+import { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
-
 
 interface FormData {
   operationType: OperationType
@@ -20,6 +22,8 @@ export function NewTransactionCard() {
     handleSubmit,
     reset,
     setError,
+    watch,
+    setValue,
     formState: {
       errors,
     },
@@ -39,7 +43,12 @@ export function NewTransactionCard() {
   
   function onSubmit(data: FormData) {
     if (!data.operationType) {
-      return setError('operationType', { message: 'Selecione um tipo de transação'})
+      return setError(
+        'operationType', 
+        {
+          message: 'Selecione um tipo de transação',
+        }
+      )
     }
     
     addTransaction({
@@ -52,26 +61,12 @@ export function NewTransactionCard() {
     })
   }
 
-  return (
-    <div
-      id="new-transaction"
-      className="bg-gray-400 rounded-lg py-6 px-6 lg:h-[350px] text-primary-400 relative z-0"
-    >
-      <Image
-        src="/Pixels3.png"
-        alt=""
-        width={180}
-        height={178}
-        className="absolute bottom-0 left-0 -z-10"
-      />
-      <Image
-        src="/Pixels4.png"
-        alt=""
-        width={180}
-        height={178}
-        className="absolute top-0 right-0 -z-10"
-      />
+  function handleChangeValue(event: ChangeEvent<HTMLInputElement>) {
+    setValue('value', moneyMask(event.target.value))
+  }
 
+  return (
+    <Card>
       <div className="grid align-left py-4 lg:grid-cols-2">
         <div className="grid gap-6">
           <h1 className="text-h1 font-bold">Nova Transação</h1>
@@ -107,14 +102,23 @@ export function NewTransactionCard() {
                     border
                     border-primary-400
                     py-2
-                    pl-2
+                    pl-10
                     text-p
                     text-center
                     outline-2
                     text-primary-400
                   "
+                  maxLength={9}
                   placeholder="0,00"
-                  {...register('value', { required: 'Adicione um valor válido' })}
+                  {...register(
+                    'value', 
+                    { 
+                      required: 'Adicione um valor válido',
+                      onChange: (event) => handleChangeValue(event),
+                      value: watch('value')
+                    }
+                  )}
+
                 />
                 <span className="absolute top-3 left-4 text-primary-400">R$ </span>
                 {errors['value'] && <p className="text-red-600 absolute">{errors['value'].message}</p>}
@@ -154,6 +158,6 @@ export function NewTransactionCard() {
           />
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
