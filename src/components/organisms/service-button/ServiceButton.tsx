@@ -14,14 +14,28 @@ export default function ServiceButton({
 }: ServiceButtonProps) {
   return (
     <Link href={link}>
-      <div className="bg-white w-[173px] h-[145px] lg:w-[192px] lg:h-[167px] rounded-lg flexbox place-content-center place-items-center">
-        <Image
-          src={imageLink}
-          alt=""
-          width={60}
-          height={60}
-          className="mb-4 -mt-6"
-        />
+      <div className="
+        bg-white
+        w-[173px]
+        h-[145px]
+        lg:w-[192px]
+        lg:h-[167px]
+        rounded-lg
+        flex
+        items-center
+        justify-center
+        flex-col
+        place-content-center
+        place-items-center
+      "
+    >
+      <Image
+        src={imageLink}
+        alt=""
+        width={60}
+        height={60}
+        className="mb-4 -mt-6"
+      />
         <p className="text-p font-bold">{text}</p>
       </div>
     </Link>

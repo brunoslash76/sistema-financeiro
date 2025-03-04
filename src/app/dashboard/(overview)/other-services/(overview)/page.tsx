@@ -5,7 +5,8 @@ export default function OtherServices() {
   return (
     <div 
       id='new-transaction'
-      className="bg-gray-400 rounded-lg py-6 px-6 lg:w-[690px] lg:h-[478px] text-black relative z-0">
+      className="bg-gray-400 rounded-lg py-6 px-6 lg:w-[690px] lg:h-[478px] text-black relative z-0"
+    >
       <Image
         src='/Pixels3.png'
         alt=''

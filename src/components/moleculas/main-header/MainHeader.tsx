@@ -6,6 +6,7 @@ import { GET_CURRENT_USER } from "@/graphql/queries/getCurrentUser";
 import { setUserData } from "@/lib/features/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useQuery } from "@apollo/client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ContextualMenu } from "../contextual-menu/ContextualMenu";
 
@@ -61,7 +62,9 @@ export function MainHeader() {
         </div>
         <div className="md:ml-auto flex items-center gap-8">
           <p className="hidden text-white md:block">{name ?? '--'}</p>
-          <UserIcon size={40} />
+          <Link href="/profile">
+            <UserIcon size={40} />
+          </Link>
         </div>
       </nav>
     </header>
